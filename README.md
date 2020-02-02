@@ -7,3 +7,5 @@ cd p1ng
 chmod +x p1ng
 
 ./p1ng
+
+Para fazer uma varredura em todos IPs da rede coloque "254".
