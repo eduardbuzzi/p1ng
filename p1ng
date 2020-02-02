@@ -9,9 +9,6 @@ minuto=$(date | cut -d ' ' -f5 | cut -d ':' -f2)
 segundo=$(date | cut -d ' ' -f5 | cut -d ':' -f3)
 
 echo
-date
-echo
-
 read -p "Quantos IPs você quer varrer na rede? " IPS
 echo
 for x in  `seq 1 "$IPS"`; do
