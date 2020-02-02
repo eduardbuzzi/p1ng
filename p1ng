@@ -9,15 +9,17 @@ minuto=$(date | cut -d ' ' -f5 | cut -d ':' -f2)
 segundo=$(date | cut -d ' ' -f5 | cut -d ':' -f3)
 
 echo
-read -p "Quantos IPs você quer varrer na rede? " IPS
+read -p "Quantos IPs você quer varrer na rede? " numeroIPS
+test "$numeroIPS" = "0" && numeroIPS=254
+test "$numeroIPS" = "" && numeroIPS=254
 echo
-for x in  `seq 1 "$IPS"`; do
+for x in  `seq 1 "$numeroIPS"`; do
 PING=$(ping -c 1 "$IP.$x" | grep "64 bytes" | cut -d' ' -f4 | sed 's/.$//')
 if [ "$PING" == "$IP.$x" ]; then
-echo "$IP.$x ESTÁ ATIVO!"
+echo -e "$IP.$x ESTÁ \033[01;32mONLINE\033[01;00m"
 echo "$IP.$x" >> "$dia$mes$ano-$hora-$minuto-$segundo-ativo"
 else
-echo "$IP.$x ESTÁ INATIVO!"
+echo -e "$IP.$x ESTÁ \033[01;31mOFFLINE\033[01;00m"
 echo "$IP.$x" >> "$dia$mes$ano-$hora-$minuto-$segundo-inativo"
 fi
 done
