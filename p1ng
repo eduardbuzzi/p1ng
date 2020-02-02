@@ -1,0 +1,45 @@
+#!/bin/bash
+
+IP=$(hostname -I | cut -d ' ' -f1 | cut -d '.' -f1-3)
+dia=$(date | cut -d ' ' -f2)
+mes=$(date | cut -d ' ' -f3)
+ano=$(date | cut -d ' ' -f4)
+hora=$(date | cut -d ' ' -f5 | cut -d ':' -f1)
+minuto=$(date | cut -d ' ' -f5 | cut -d ':' -f2)
+segundo=$(date | cut -d ' ' -f5 | cut -d ':' -f3)
+
+echo
+date
+echo
+
+read -p "Quantos IPs você quer varrer na rede? " IPS
+echo
+for x in  `seq 1 "$IPS"`; do
+PING=$(ping -c 1 "$IP.$x" | grep "64 bytes" | cut -d' ' -f4 | sed 's/.$//')
+if [ "$PING" == "$IP.$x" ]; then
+echo "$IP.$x ESTÁ ATIVO!"
+echo "$IP.$x" >> "$dia$mes$ano-$hora-$minuto-$segundo-ativo"
+else
+echo "$IP.$x ESTÁ INATIVO!"
+echo "$IP.$x" >> "$dia$mes$ano-$hora-$minuto-$segundo-inativo"
+fi
+done
+IPativos=$(cat "$dia$mes$ano-$hora-$minuto-$segundo-ativo")
+IPinativos=$(cat "$dia$mes$ano-$hora-$minuto-$segundo-inativo")
+sleep 1
+echo
+echo
+echo "IP(s) ATIVO(s)"
+echo
+echo "$IPativos"
+echo
+echo "IP(s) INATIVO(s)"
+echo
+echo "$IPinativos"
+echo
+read -p "Nome do arquivo que deseja salvar o log do Ping: " arquivo
+conteudoArquivo=$(echo -e "\n$dia $mes $ano $hora:$minuto:$segundo \n\nIP(s) ATIVO(s)\n\n $IPativos \n\n----------------\n\nIP(s) INATIVO(s)\n\n $IPinativos \n" >> "$arquivo")
+echo "$conteudoArquivo"
+rm "$dia$mes$ano-$hora-$minuto-$segundo-ativo"
+rm "$dia$mes$ano-$hora-$minuto-$segundo-inativo"
+exit
