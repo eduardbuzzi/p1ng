@@ -38,7 +38,7 @@ echo
 echo "$IPativos"
 echo
 read -p "Nome do arquivo que deseja salvar o log do Ping: " arquivo
-conteudoArquivo=$(echo -e "\n$dia $mes $ano $hora:$minuto:$segundo \n\nIP(s) ATIVO(s)\n\n$IPativos \n\n----------------\n\nIP(s) INATIVO(s)\n\n$IPinativos \n" >> "$arquivo")
+conteudoArquivo=$(echo -e "\n$dia $mes $ano $hora:$minuto:$segundo \n\nIP(s) ATIVO(s)\n\n$IPativos \n\n----------------\n\nIP(s) INATIVO(s)\n\n$IPinativos \n" >> "$arquivo.txt")
 echo "$conteudoArquivo"
 rm "$dia$mes$ano-$hora-$minuto-$segundo-ativo"
 rm "$dia$mes$ano-$hora-$minuto-$segundo-inativo"
