@@ -1,6 +1,6 @@
 # p1ng 1.01 - Instalação
 
-git clone https://github.com/eduardbuzzi/p1ng
+git clone https://github.com/edubuzzi/p1ng
 
 cd p1ng
 
